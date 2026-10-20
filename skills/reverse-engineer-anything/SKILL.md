@@ -189,10 +189,17 @@ as complete while required questions remain open.
   [references/runtime-observation.md](references/runtime-observation.md)
 - Evidence paging, comparisons, residual unknowns, and verification:
   [references/evidence-workflows.md](references/evidence-workflows.md)
+- iOS .ipa build/inject framework index — cross-compile toolchain (zig cc →
+  aarch64-ios, iPhoneOS 15.6 SDK, ldid), acquisition, static-analysis engines,
+  dylib build/package and byte-patch tooling, for reconstructing or injecting an
+  observer/mod dylib into an analyzed iOS target:
+  [IOS-ZIG-TOOLCHAIN.md](https://github.com/morluto/rea/blob/main/IOS-ZIG-TOOLCHAIN.md)
 
 ## Finish the task
 
 Explain findings in plain language and tie them to returned evidence. When the
 user asks to build something, use normal coding tools and separate observed
-behavior from design choices. Close an opened native session with
+behavior from design choices. For building or injecting a native iOS dylib (e.g. a
+runtime observer) into an analyzed target, follow the iOS .ipa build/inject
+framework index linked above. Close an opened native session with
 `close_binary` when the investigation is complete.
