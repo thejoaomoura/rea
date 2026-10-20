@@ -97,3 +97,16 @@ context. PSP/stack/device state remains unmodeled. See [DOS guide](https://githu
 ### Function annotations in Ghidra
 
 Use `annotate_native_function` for one function name and/or entry comments, with at least one explicit change. Review its annotation readback and refreshed dossier inline. Changes are atomic and session-scoped; empty comments clear them, omitted fields preserve them. Later MCP calls observe edits until close. CLI `annotate-native-function` returns the updated analysis before discarding the session. Original executable bytes are unchanged; edits invalidate immutable snapshots. Windows P0 does not admit database mutations.
+
+## Reusable Mach-O / IPA packaging tool
+
+`references/package_ipa.py` is a parameterised, self-contained module + CLI for
+thin ARM64 Mach-O parsing, signature removal, single `LC_LOAD_DYLIB` injection
+into a main executable, and IPA repackaging that preserves every other member
+byte-for-byte. Output is unsigned — re-sign the app and the added dylib with an
+external signer. Import its functions (`parse_image`, `remove_signature`,
+`add_dylib`, `prepare_image`, `build_package`) or run it:
+
+```
+python3 references/package_ipa.py build --source app.ipa --module mod.dylib --output out.ipa
+```
