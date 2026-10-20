@@ -55,6 +55,7 @@ describe("canonical skill transaction", () => {
     );
     for (const reference of [
       "native-and-artifacts.md",
+      "ios-mobsf-ipsw.md",
       "javascript-applications.md",
       "android-applications.md",
       "runtime-observation.md",

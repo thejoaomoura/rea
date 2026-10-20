@@ -81,6 +81,11 @@ explicit path or endpoint and do not need it.
 - Archive/package member inventory (ZIP/APK/IPA/MSIX/AppX or DMG):
   `open_binary` with the supplied local path; use `inspect_artifact` when its
   graph and findings help answer the question.
+- iOS IPA security assessment or its contained Mach-O inspection:
+  follow [references/ios-mobsf-ipsw.md](references/ios-mobsf-ipsw.md) for local
+  MobSF without Docker, ObjC/experimental Swift inspection with `ipsw`, and
+  portable Win64 XMachOViewer when ipsw fails. These are external shell/GUI
+  workflows; inventory and extract the package with REA first.
 - Android APK code, classes, methods, or incoming references:
   `inspect_android_package`, then focused Android tools when advertised.
   Archive member inventory still uses the archive route above.
@@ -174,6 +179,8 @@ as complete while required questions remain open.
 
 - Native binaries, managed assemblies, archives, and extraction:
   [references/native-and-artifacts.md](references/native-and-artifacts.md)
+- IPA security assessment and Mach-O inspection with MobSF/ipsw/XMachOViewer:
+  [references/ios-mobsf-ipsw.md](references/ios-mobsf-ipsw.md)
 - ASARs, extracted JavaScript, feature tracing, and version comparison:
   [references/javascript-applications.md](references/javascript-applications.md)
 - Android APK declarations, classes, methods, and static references:

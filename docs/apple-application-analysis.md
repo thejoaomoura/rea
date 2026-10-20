@@ -1,5 +1,12 @@
 # Apple Application Inventory Projection
 
+For local MobSF security assessment without Docker and Windows Mach-O inspection
+with blacktop/ipsw (including ObjC and experimental Swift metadata), plus the
+portable Win64 XMachOViewer GUI fallback, see the bundled
+[IPA analysis workflow](../skills/reverse-engineer-anything/references/ios-mobsf-ipsw.md).
+The agent invokes these external tools through its shell or GUI; they are not REA MCP
+providers. `rea setup` distributes the workflow but does not install the tools.
+
 REA can project one or more authenticated `inventory_artifact` Evidence records
 for the same IPA, macOS `.app` directory, ZIP, or DMG into an Apple application
 inventory. The projection is execution-free: it reports exact paths, content

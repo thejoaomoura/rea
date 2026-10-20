@@ -7,6 +7,7 @@ import { PRODUCT_IDENTITY } from "../identity.js";
 const SKILL_FILES = [
   "SKILL.md",
   "references/native-and-artifacts.md",
+  "references/ios-mobsf-ipsw.md",
   "references/javascript-applications.md",
   "references/android-applications.md",
   "references/runtime-observation.md",
