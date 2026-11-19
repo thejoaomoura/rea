@@ -93,7 +93,7 @@ function ext(col,n=12,dx=.7,dy=1,soft='rgba(0,0,0,.3)'){let a=[];for(let i=1;i<=
 /* a lyric line, split into words (.wd) and chars (.ch); centred on (x,y) */
 function line(txt,o){const el=document.createElement('div');el.className='ln'+(o.cls?' '+o.cls:'');
  el.style.cssText=`left:${o.x??540}px;top:${o.y}px;font-family:'${o.font}';font-size:${o.size}px;font-weight:${o.w??500};font-style:${o.it?'italic':'normal'};letter-spacing:${o.ls??0}em;color:${o.color??PALETTE.paper};${o.fvs?`font-variation-settings:${o.fvs};`:''}${o.css??''}`;
- const words=[],chars=[];txt.split(' ').forEach((w,i)=>{if(i)el.appendChild(document.createTextNode(' '));const wd=document.createElement('span');wd.className='wd';
+ const words=[],chars=[];const ws=txt.split(' ');ws.forEach((w,i)=>{const wd=document.createElement('span');wd.className='wd';if(i<ws.length-1)wd.style.marginRight='.26em';
   [...w].forEach(ch=>{const s=document.createElement('span');s.className='ch';s.textContent=ch;wd.appendChild(s);chars.push(s)});el.appendChild(wd);words.push(wd)});
  (o.parent??cam).appendChild(el);gsap.set(el,{xPercent:-50,yPercent:-50,z:o.z??0});
  return{el,words,chars,wc:words.map(w=>[...w.children])}}

@@ -30,6 +30,10 @@ Base de método: skill `bang-motion` (hukum anti-PPT, determinismo, style brief)
    Correção pontual → re-render só o intervalo (`START`/`END`) e recodificar.
 8. **Encode**: `tools/encode.sh frames assets/chorus.mp3 out.mp4` (CRF 20 + maxrate 10M; só CRF
    gerou 500 MB por causa do grão). Checar frames do MP4 final antes de entregar.
+9. **Motion blur estilo After Effects** (padrão desde Circus): `tools/export-mb.cjs` (supersampling temporal,
+   SAMPLES=4, SHUTTER=180, WORKERS=4 navegadores separados = ~3,4× mais rápido; retomável, pula quadros prontos)
+   → `tools/encode-mb.sh subframes audio out.mp4 30 4` (tmix). GIF de prévia: mesmo par com FPS 15, SHUTTER 90.
+   Prévias (folha de contato + GIFs) SEMPRE antes do render final, para aprovação.
 
 ## Regras do padrão
 - **9:16, 1080×1920, 30 fps**; marca d'água `@moura’slyrics` no topo, 30 px, `mix-blend-mode:difference`,
@@ -51,7 +55,21 @@ Base de método: skill `bang-motion` (hukum anti-PPT, determinismo, style brief)
 - Fontes **novas a cada vídeo** (não repetir o conjunto anterior). Usadas: She Wolf = Barlow
   Condensed, Instrument Serif, Space Grotesk, Syne, Italianno, Playfair Display 900i.
   Elastic Heart = Anybody (wdth 50–150), Fraunces (SOFT/WONK), Archivo (wdth), DM Mono.
-- Paletas usadas: She Wolf `#28161F #EFE8DD #D9B55B`; Elastic Heart `#0E1A2E #E8384F #F3EFE9 #3D6BFF`.
+  Circus = Clash Display, Panchang, Gambetta itálico, Rampart One, Nabla (CIRCUS).
+- Paletas usadas: She Wolf `#28161F #EFE8DD #D9B55B`; Elastic Heart `#0E1A2E #E8384F #F3EFE9 #3D6BFF`;
+  Circus `#1A0F1F #F4E9D8 #FFC24B` (+ colagem branco/preto/verde `#14934B`).
+
+## Direção que o usuário aprovou (Circus)
+- **Câmera 3D de verdade**: cada cena é um grupo em (x,y,z) no mundo; a câmera viaja entre eles (dolly/órbita),
+  com foco seletivo por distância (DOF) e deriva lenta durante a cena. Nada de cortes secos entre frases.
+- **Cenário em profundidade**: fundos são planos 3D atrás de cada cena (cortina, lona, parede de lâmpadas, neon,
+  picadeiro em perspectiva), nunca uma camada chapada de tela. Holofotes são feixes dentro da cena.
+- **Holofotes reagem aos graves**: envelope de 30–110 Hz extraído do áudio por quadro (JSON embutido).
+- **Texto respira** depois de entrar (CSS `translate` por letra, compõe com o GSAP) e sai passando pela lente.
+- Entradas longas e em camadas (montagem da profundidade, rolagem, porta, onda, vindo da lente).
+  O rebote seco de 9 quadros foi rejeitado — não usar.
+- Fontes de display de fundição (Fontshare: Clash Display, Panchang, Gambetta; Google: Rampart One, Nabla
+  colorida 3D). Fontes "padrão de sistema" foram rejeitadas. Mostrar prancha de direções tipográficas antes.
 
 ## Armadilhas já vistas
 - Texto grande estoura 1080 px (Syne/Anybody largos, wdth alto, câmera com zoom) → testar o pior
@@ -64,6 +82,13 @@ Base de método: skill `bang-motion` (hukum anti-PPT, determinismo, style brief)
 - rembg BiRefNet estoura a memória (e não recortamos fotos pessoais de qualquer jeito).
 - Vetorizar imagem de apoio (ex.: lobo): foto de domínio público → `tools/seg.py` + `tools/trace.py`
   (camadas tonais via potrace), depois feather + sombra interna/externa para a borda não ficar dura.
+- Desempenho: `filter: blur()` animado em elementos grandes é o que mais custa no Chromium sem GPU. Pré-renderizar
+  (canvas → imagem) tudo que é estático (feixes de luz) e trocar `filter: brightness` por overlay com opacidade.
+  Várias páginas no mesmo navegador NÃO paralelizam (compositor único) — usar navegadores separados.
+- Tweens de câmera que se sobrepõem no tempo: ao pular (seek) para frente, o último a ser criado vence; nunca
+  deixar cortes de uma cena invadirem a viagem para a próxima.
+- Regex para remover código: âncora estrita, senão apaga bloco vizinho (perdemos uma cena inteira assim).
+- Fontes sem glifo de espaço (Gambetta): o `line()` usa margem entre palavras em vez de espaço de texto.
 - Background bash morre em 30 min; container pode reiniciar: frames ficam no disco, retomar.
 
 ## Referências
