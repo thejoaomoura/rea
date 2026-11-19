@@ -1,0 +1,12 @@
+# media and generated outputs stay out of git (copyright / personal photos / size)
+*.mp3
+*.wav
+*.m4a
+*.mp4
+*.jpg
+*.jpeg
+*.png
+*.woff2
+assets/
+frames*/
+**/assets/
