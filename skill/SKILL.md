@@ -34,6 +34,8 @@ Base de método: skill `bang-motion` (hukum anti-PPT, determinismo, style brief)
    SAMPLES=4, SHUTTER=180, WORKERS=4 navegadores separados = ~3,4× mais rápido; retomável, pula quadros prontos)
    → `tools/encode-mb.sh subframes audio out.mp4 30 4` (tmix). GIF de prévia: mesmo par com FPS 15, SHUTTER 90.
    Prévias (folha de contato + GIFs) SEMPRE antes do render final, para aprovação.
+   Movimento muito rápido (letras atravessando o quadro) com 4 amostras vira estroboscópico (cópias separadas):
+   re-renderizar só esse trecho com 12 amostras e sobrepor no MP4 → `tools/mb-splice.sh URL final.mp4 A B 12`.
 
 ## Regras do padrão
 - **9:16, 1080×1920, 30 fps**; marca d'água `@moura’slyrics` no topo, 30 px, `mix-blend-mode:difference`,
